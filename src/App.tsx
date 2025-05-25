@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 import { useMsal } from "@azure/msal-react";
 import { loginRequest } from "./msalConfig";
@@ -8,15 +8,24 @@ function App() {
 
   const [messages, setMessages] = useState<Array<{ text: string; sender: string }>>([])
   const [input, setInput] = useState('')
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const login = async () => {
     try {
       const loginResponse = await instance.loginPopup(loginRequest);
       instance.setActiveAccount(loginResponse.account);
+      setIsLoggedIn(true);
     } catch (e) {
       console.error("Login failed", e);
     }
   };
+
+  // Check if already logged in on mount
+  useEffect(() => {
+    if (instance.getActiveAccount()) {
+      setIsLoggedIn(true);
+    }
+  }, [instance]);
 
   const sendMessage = async (message: string) => {
     try {
@@ -45,33 +54,38 @@ function App() {
 
   return (
     <>
-      <button onClick={login} className="login-button">Login</button>
-      <div className="chat-container">
-        <div className="chat-history">
-          {messages.map((message, index) => (
-            <div key={index} className={`message ${message.sender}`}>
-              {message.text}
-            </div>
-          ))}
+      {!isLoggedIn ? (
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+          <button onClick={login} className="login-button">Login</button>
         </div>
-        <div className="chat-input">
-          <textarea
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyUp={async (e) => {
-              if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                setMessages([...messages, { text: input, sender: 'user' }]);
-                await sendMessage(input);
-                setInput('');
-              }
-            }}
-            placeholder="Type your message..."
-            rows={4}
-            style={{ resize: 'none' }}
-          />
+      ) : (
+        <div className="chat-container">
+          <div className="chat-history">
+            {messages.map((message, index) => (
+              <div key={index} className={`message ${message.sender}`}>
+                {message.text}
+              </div>
+            ))}
+          </div>
+          <div className="chat-input">
+            <textarea
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyUp={async (e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                  e.preventDefault();
+                  setMessages([...messages, { text: input, sender: 'user' }]);
+                  await sendMessage(input);
+                  setInput('');
+                }
+              }}
+              placeholder="Type your message..."
+              rows={4}
+              style={{ resize: 'none' }}
+            />
+          </div>
         </div>
-      </div>
+      )}
     </>
   )
 }
