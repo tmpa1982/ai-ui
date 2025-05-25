@@ -20,3 +20,18 @@
 .chat-input textarea {
   width: 100%;
 }
+
+.login-button {
+  display: inline-block;
+  margin: 0 auto;
+  padding: 0.75em 2em;
+  font-size: 1.2em;
+}
+
+.login-center-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+}

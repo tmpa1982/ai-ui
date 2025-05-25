@@ -55,7 +55,7 @@ function App() {
   return (
     <>
       {!isLoggedIn ? (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <div className="login-center-container">
           <button onClick={login} className="login-button">Login</button>
         </div>
       ) : (
