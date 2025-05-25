@@ -1,24 +1,45 @@
 import { useState } from 'react'
 import './App.css'
+import { useMsal } from "@azure/msal-react";
+import { loginRequest } from "./msalConfig";
 
 function App() {
+  const { instance, accounts } = useMsal();
+
   const [messages, setMessages] = useState<Array<{ text: string; sender: string }>>([])
   const [input, setInput] = useState('')
 
+  const login = async () => {
+    try {
+      const loginResponse = await instance.loginPopup(loginRequest);
+      instance.setActiveAccount(loginResponse.account);
+    } catch (e) {
+      console.error("Login failed", e);
+    }
+  };
+
   const sendMessage = async (message: string) => {
-    const apiUrl: string = import.meta.env.VITE_API_URL || 'https://tran-llm-daatfkc6hhf0a8hf.southeastasia-01.azurewebsites.net/openai/question';
-    const response = await fetch(apiUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ message }),
-    });
-    if (response.ok) {
-      const data = await response.text();
-      setMessages((prev) => [...prev, { text: data || 'No response', sender: 'bot' }]);
-    } else {
-      setMessages((prev) => [...prev, { text: 'Error: Failed to get response from API', sender: 'bot' }]);
+    try {
+      const tokenResponse = await instance.acquireTokenSilent(loginRequest);
+
+      const apiUrl: string = import.meta.env.VITE_API_URL || 'https://tran-llm-daatfkc6hhf0a8hf.southeastasia-01.azurewebsites.net/openai/question';
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${tokenResponse.accessToken}`,
+        },
+        body: JSON.stringify({ message }),
+      });
+
+      if (response.ok) {
+        const data = await response.text();
+        setMessages((prev) => [...prev, { text: data || 'No response', sender: 'bot' }]);
+      } else {
+        setMessages((prev) => [...prev, { text: 'Error: Failed to get response from API', sender: 'bot' }]);
+      }
+    } catch (err) {
+      console.error("API call failed:", err);
     }
   };
 
