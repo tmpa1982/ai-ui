@@ -45,6 +45,7 @@ function App() {
 
   return (
     <>
+      <button onClick={login} className="login-button">Login</button>
       <div className="chat-container">
         <div className="chat-history">
           {messages.map((message, index) => (
