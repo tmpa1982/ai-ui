@@ -4,7 +4,7 @@ import { useMsal } from "@azure/msal-react";
 import { loginRequest } from "./msalConfig";
 
 function App() {
-  const { instance, accounts } = useMsal();
+  const { instance } = useMsal();
 
   const [messages, setMessages] = useState<Array<{ text: string; sender: string }>>([])
   const [input, setInput] = useState('')
