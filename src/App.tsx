@@ -67,7 +67,7 @@ function App() {
               </div>
             ))}
           </div>
-          <div className="chat-input">
+          <div className="chat-input" style={{ display: 'flex', gap: '8px', alignItems: 'flex-end' }}>
             <textarea
               value={input}
               onChange={(e) => setInput(e.target.value)}
@@ -81,8 +81,21 @@ function App() {
               }}
               placeholder="Type your message..."
               rows={4}
-              style={{ resize: 'none' }}
+              style={{ resize: 'none', flex: 1 }}
             />
+            <button
+              className="send-button"
+              onClick={async () => {
+                if (input.trim()) {
+                  setMessages([...messages, { text: input, sender: 'user' }]);
+                  await sendMessage(input);
+                  setInput('');
+                }
+              }}
+              style={{ height: '48px' }}
+            >
+              Send
+            </button>
           </div>
         </div>
       )}
