@@ -31,8 +31,8 @@ function App() {
     try {
       const tokenResponse = await instance.acquireTokenSilent(loginRequest);
 
-      const apiUrl: string = import.meta.env.VITE_API_URL || 'https://tran-llm-daatfkc6hhf0a8hf.southeastasia-01.azurewebsites.net/openai/question';
-      const response = await fetch(apiUrl, {
+      const apiUrl: string = import.meta.env.VITE_API_URL || 'https://tran-llm-daatfkc6hhf0a8hf.southeastasia-01.azurewebsites.net';
+      const response = await fetch(`${apiUrl}/openai/question`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
