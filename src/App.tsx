@@ -1,42 +1,39 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import './App.css'
-import { useMsal } from "@azure/msal-react";
-import { loginRequest } from "./msalConfig";
+import { useMsal, useAccount, useIsAuthenticated } from "@azure/msal-react";
+import { apiRequest, loginRequest } from "./msalConfig";
 
 function App() {
-  const { instance } = useMsal();
+  const { instance, accounts } = useMsal();
+  const isAuthenticated = useIsAuthenticated();
+  const account = useAccount(accounts[0] || {});
 
   const [messages, setMessages] = useState<Array<{ text: string; sender: string }>>([])
   const [input, setInput] = useState('')
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const login = async () => {
+  async function getToken() {
     try {
-      const loginResponse = await instance.loginPopup(loginRequest);
-      instance.setActiveAccount(loginResponse.account);
-      setIsLoggedIn(true);
-    } catch (e) {
-      console.error("Login failed", e);
+      const response = await instance.acquireTokenSilent({
+        ...apiRequest,
+        account: account!,
+      });
+      return response.accessToken;
+    } catch (error) {
+      // fallback to interactive if silent fails
+      const response = await instance.acquireTokenPopup(apiRequest);
+      return response.accessToken;
     }
-  };
-
-  // Check if already logged in on mount
-  useEffect(() => {
-    if (instance.getActiveAccount()) {
-      setIsLoggedIn(true);
-    }
-  }, [instance]);
+  }
 
   const sendMessage = async (message: string) => {
+    const token = await getToken();
     try {
-      const tokenResponse = await instance.acquireTokenSilent(loginRequest);
-
       const apiUrl: string = import.meta.env.VITE_API_URL || 'https://tran-llm-daatfkc6hhf0a8hf.southeastasia-01.azurewebsites.net';
       const response = await fetch(`${apiUrl}/openai/question`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${tokenResponse.accessToken}`,
+          'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify({ message }),
       });
@@ -54,9 +51,9 @@ function App() {
 
   return (
     <>
-      {!isLoggedIn ? (
+      {!isAuthenticated ? (
         <div className="login-center-container">
-          <button onClick={login} className="login-button">Login</button>
+          <button onClick={() => instance.loginPopup(loginRequest)} className="login-button">Login</button>
         </div>
       ) : (
         <div className="chat-container">
