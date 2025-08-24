@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Markdown from 'react-markdown';
 import { useMsal, useAccount } from "@azure/msal-react";
 import { apiRequest } from "./msalConfig";
@@ -32,6 +32,10 @@ function Interview() {
 
   }
 
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
   const sendMessage = async (message: string) => {
     const token = await getToken();
     try {
@@ -56,8 +60,15 @@ function Interview() {
     }
   };
 
+  const scrollToBottom = () => {
+    const chatHistory = document.querySelector('.chat-history');
+    if (chatHistory) {
+      chatHistory.scrollTop = chatHistory.scrollHeight;
+    }
+  }
+
   return (
-    <div className="chat-container h-full flex flex-col">
+    <div className="chat-container h-screen flex flex-col [&::-webkit-scrollbar]:hidden">
       <div className="chat-history flex-1 m-2 overflow-y-auto [&::-webkit-scrollbar]:hidden">
         {messages.map((message, index) => {
           const textAlign = message.sender === 'user' ? 'text-right' : 'text-left';

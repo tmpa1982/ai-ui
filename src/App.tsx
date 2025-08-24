@@ -7,7 +7,7 @@ function App() {
   const isAuthenticated = useIsAuthenticated();
 
   return (
-    <div className="app-container h-screen bg-gray-900 text-gray-50 p-2">
+    <div className="app-container h-screen bg-gray-900 text-gray-50">
       {!isAuthenticated ? (
         <div className="login-center-container h-full flex justify-center items-center">
           <button className="login-button border-2 border-gray-500 rounded-lg m-2 p-4 px-8 text-gray-400 font-bold"
