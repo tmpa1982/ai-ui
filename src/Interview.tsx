@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Markdown from 'react-markdown';
 import { useMsal, useAccount } from "@azure/msal-react";
 import { apiRequest } from "./msalConfig";
 
@@ -64,9 +65,9 @@ function Interview() {
           const backgroundColor = message.sender === 'user' ? 'bg-blue-500' : 'bg-gray-700';
           const textColor = message.sender === 'user' ? 'text-white' : 'text-gray-300';
           return (
-            <div className="flex">
-              <div key={index} className={`message ${message.sender} ${textAlign} ${marginLeft} ${backgroundColor} ${textColor} border-2 border-gray-500 rounded-2xl m-1 p-2 max-w-3/4 inline-block`}>
-                {message.text}
+            <div key={index} className="flex">
+              <div className={`message ${message.sender} ${textAlign} ${marginLeft} ${backgroundColor} ${textColor} border-2 border-gray-500 rounded-2xl m-1 p-2 max-w-3/4 inline-block`}>
+                <Markdown>{message.text}</Markdown>
               </div>
             </div>
           )
