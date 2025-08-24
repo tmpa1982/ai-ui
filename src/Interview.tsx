@@ -99,7 +99,7 @@ function Interview() {
           rows={3}
         />
         <button
-          className="send-button border-2 border-gray-500 rounded-lg m-2 p-4 text-gray-400 font-bold"
+          className="send-button border-2 border-gray-500 rounded-lg m-2 p-4 bg-blue-500 text-white font-bold"
           onClick={() => extractAndSendMessage(input)}
         >
           Send
