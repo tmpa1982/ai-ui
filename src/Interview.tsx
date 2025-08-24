@@ -49,12 +49,20 @@ function Interview() {
 
   return (
     <div className="chat-container h-full flex flex-col">
-      <div className="chat-history flex-1 m-2 text-gray-400">
-        {messages.map((message, index) => (
-          <div key={index} className={`message ${message.sender}`}>
-            {message.text}
-          </div>
-        ))}
+      <div className="chat-history flex-1 m-2">
+        {messages.map((message, index) => {
+          const textAlign = message.sender === 'user' ? 'text-right' : 'text-left';
+          const marginLeft = message.sender === 'user' ? 'ml-auto' : '';
+          const backgroundColor = message.sender === 'user' ? 'bg-blue-500' : 'bg-gray-700';
+          const textColor = message.sender === 'user' ? 'text-white' : 'text-gray-300';
+          return (
+            <div className="flex">
+              <div key={index} className={`message ${message.sender} ${textAlign} ${marginLeft} ${backgroundColor} ${textColor} border-2 border-gray-500 rounded-2xl m-1 p-2 max-w-3/4 inline-block`}>
+                {message.text}
+              </div>
+            </div>
+          )
+        })}
       </div>
       <div className="chat-input flex">
         <textarea
