@@ -22,6 +22,14 @@ function Interview() {
     }
   }
 
+  const extractAndSendMessage = async (input: string) => {
+    if (input.trim()) {
+      setMessages([...messages, { text: input, sender: 'user' }]);
+      await sendMessage(input);
+      setInput('');
+    }
+
+  }
 
   const sendMessage = async (message: string) => {
     const token = await getToken();
@@ -72,9 +80,7 @@ function Interview() {
           onKeyUp={async (e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
               e.preventDefault();
-              setMessages([...messages, { text: input, sender: 'user' }]);
-              await sendMessage(input);
-              setInput('');
+              extractAndSendMessage(input);
             }
           }}
           placeholder="Type your message..."
@@ -82,13 +88,7 @@ function Interview() {
         />
         <button
           className="send-button border-2 border-gray-500 rounded-lg m-2 p-4 text-gray-400 font-bold"
-          onClick={async () => {
-            if (input.trim()) {
-              setMessages([...messages, { text: input, sender: 'user' }]);
-              await sendMessage(input);
-              setInput('');
-            }
-          }}
+          onClick={() => extractAndSendMessage(input)}
         >
           Send
         </button>
