@@ -57,7 +57,7 @@ function Interview() {
 
   return (
     <div className="chat-container h-full flex flex-col">
-      <div className="chat-history flex-1 m-2">
+      <div className="chat-history flex-1 m-2 overflow-y-auto [&::-webkit-scrollbar]:hidden">
         {messages.map((message, index) => {
           const textAlign = message.sender === 'user' ? 'text-right' : 'text-left';
           const marginLeft = message.sender === 'user' ? 'ml-auto' : '';
