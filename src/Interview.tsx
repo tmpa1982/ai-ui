@@ -45,7 +45,7 @@ function Interview() {
       });
 
       if (response.ok) {
-        const data = await response.text();
+        const data = await response.json();
         setMessages((prev) => [...prev, { text: data || 'No response', sender: 'bot' }]);
       } else {
         setMessages((prev) => [...prev, { text: 'Error: Failed to get response from API', sender: 'bot' }]);
