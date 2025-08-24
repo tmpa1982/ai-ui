@@ -25,8 +25,8 @@ function Interview() {
   const extractAndSendMessage = async (input: string) => {
     if (input.trim()) {
       setMessages([...messages, { text: input, sender: 'user' }]);
-      await sendMessage(input);
       setInput('');
+      await sendMessage(input);
     }
 
   }
