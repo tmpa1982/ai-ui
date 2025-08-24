@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import './App.css'
 import { useMsal, useAccount, useIsAuthenticated } from "@azure/msal-react";
 import { apiRequest, loginRequest } from "./msalConfig";
 
