@@ -3,6 +3,7 @@ import { useMsal, useAccount } from "@azure/msal-react";
 import { apiRequest } from "./msalConfig";
 import ChatHistory from './ChatHistory'
 import ChatInput from './ChatInput'
+import Header from './Header'
 import type { Message } from './types'
 
 function Interview() {
@@ -68,6 +69,7 @@ function Interview() {
 
   return (
     <div className="chat-container h-screen flex flex-col [&::-webkit-scrollbar]:hidden">
+      <Header />
       <ChatHistory messages={messages} isLoading={isLoading} />
       <ChatInput onSendMessage={extractAndSendMessage} />
     </div>
