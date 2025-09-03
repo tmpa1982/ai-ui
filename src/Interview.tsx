@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useMsal, useAccount } from "@azure/msal-react";
 import { apiRequest } from "./msalConfig";
-import UserMessage from './UserMessage'
-import BotMessage from './BotMessage'
+import ChatHistory from './ChatHistory'
 
 function Interview() {
   const [messages, setMessages] = useState<Array<{ text: string; sender: string }>>([])
@@ -70,12 +69,7 @@ function Interview() {
 
   return (
     <div className="chat-container h-screen flex flex-col [&::-webkit-scrollbar]:hidden">
-      <div className="chat-history flex-1 m-2 overflow-y-auto [&::-webkit-scrollbar]:hidden">
-        {messages.map((message, index) => {
-            const MessageComponent = message.sender === 'user' ? UserMessage : BotMessage
-            return <MessageComponent key={index} text={message.text} />
-        })}
-      </div>
+      <ChatHistory messages={messages} />
       <div className="chat-input flex">
         <textarea
           className="border-2 border-gray-500 rounded-lg m-2 p-2 flex-1"
