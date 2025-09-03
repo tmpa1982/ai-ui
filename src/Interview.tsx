@@ -6,6 +6,7 @@ import type { Message } from './types'
 
 function Interview() {
   const [messages, setMessages] = useState<Message[]>([])
+  const [isLoading, setIsLoading] = useState(false)
   const [input, setInput] = useState('')
   const { instance, accounts } = useMsal();
   const account = useAccount(accounts[0] || {});
@@ -41,6 +42,7 @@ function Interview() {
 
   const sendMessage = async (message: string) => {
     const token = await getToken();
+    setIsLoading(true)
     try {
       const apiUrl: string = import.meta.env.VITE_API_URL || 'https://tran-llm-daatfkc6hhf0a8hf.southeastasia-01.azurewebsites.net';
       const response = await fetch(`${apiUrl}/langgraph/question`, {
@@ -60,12 +62,14 @@ function Interview() {
       }
     } catch (err) {
       console.error("API call failed:", err);
+    } finally {
+      setIsLoading(false)
     }
   };
 
   return (
     <div className="chat-container h-screen flex flex-col [&::-webkit-scrollbar]:hidden">
-      <ChatHistory messages={messages} />
+      <ChatHistory messages={messages} isLoading={isLoading} />
       <div className="chat-input flex">
         <textarea
           className="border-2 border-gray-500 rounded-lg m-2 p-2 flex-1"

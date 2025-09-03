@@ -6,9 +6,10 @@ import type { Message } from './types'
 
 interface ChatHistoryProps {
   messages: Message[]
+  isLoading: boolean
 }
 
-function ChatHistory({ messages }: ChatHistoryProps) {
+function ChatHistory({ messages, isLoading }: ChatHistoryProps) {
   const chatContainerRef = useRef<HTMLDivElement>(null)
 
   const scrollToBottom = () => {
@@ -19,7 +20,7 @@ function ChatHistory({ messages }: ChatHistoryProps) {
 
   useEffect(() => {
     scrollToBottom()
-  }, [messages])
+  }, [messages, isLoading])
 
   return (
     <div ref={chatContainerRef} className="chat-history flex-1 m-2 overflow-y-auto [&::-webkit-scrollbar]:hidden">
@@ -27,6 +28,8 @@ function ChatHistory({ messages }: ChatHistoryProps) {
           const MessageComponent = message.sender === 'user' ? UserMessage : BotMessage
           return <MessageComponent key={message.id} text={message.text} />
       })}
+
+      {isLoading && <BotMessage text="Typing..." />}
     </div>
   )
 }
