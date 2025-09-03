@@ -2,9 +2,10 @@ import { useState, useEffect } from 'react'
 import { useMsal, useAccount } from "@azure/msal-react";
 import { apiRequest } from "./msalConfig";
 import ChatHistory from './ChatHistory'
+import type { Message } from './types'
 
 function Interview() {
-  const [messages, setMessages] = useState<Array<{ text: string; sender: string }>>([])
+  const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState('')
   const { instance, accounts } = useMsal();
   const account = useAccount(accounts[0] || {});
@@ -23,13 +24,19 @@ function Interview() {
     }
   }
 
+  const createMessage = (text: string, sender: 'user' | 'bot'): Message => ({
+    id: crypto.randomUUID(),
+    text,
+    sender,
+    timestamp: new Date()
+  })
+
   const extractAndSendMessage = async (input: string) => {
     if (input.trim()) {
-      setMessages([...messages, { text: input, sender: 'user' }]);
+      setMessages([...messages, createMessage(input, 'user')]);
       setInput('');
       await sendMessage(input);
     }
-
   }
 
   useEffect(() => {
@@ -51,9 +58,9 @@ function Interview() {
 
       if (response.ok) {
         const data = await response.json();
-        setMessages((prev) => [...prev, { text: data || 'No response', sender: 'bot' }]);
+        setMessages((prev) => [...prev, createMessage(data || 'No response', 'bot')]);
       } else {
-        setMessages((prev) => [...prev, { text: 'Error: Failed to get response from API', sender: 'bot' }]);
+        setMessages((prev) => [...prev, createMessage('Error: Failed to get response from API', 'bot')]);
       }
     } catch (err) {
       console.error("API call failed:", err);
