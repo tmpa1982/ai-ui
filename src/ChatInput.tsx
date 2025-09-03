@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Send } from 'lucide-react'
 
 interface ChatInputProps {
   onSendMessage: (message: string) => void;
@@ -27,13 +28,13 @@ function ChatInput({ onSendMessage }: ChatInputProps) {
           }
         }}
         placeholder="Type your message..."
-        rows={3}
+        rows={2}
       />
       <button
-        className="send-button border-2 border-gray-500 rounded-lg m-2 p-4 bg-blue-500 text-white font-bold"
+        className="send-button border-2 border-gray-500 rounded-lg m-2 p-4 bg-blue-500 text-white"
         onClick={handleSendMessage}
       >
-        Send
+        <Send size={24} />
       </button>
     </div>
   )
