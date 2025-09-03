@@ -71,7 +71,7 @@ function Interview() {
     <div className="chat-container h-screen flex flex-col [&::-webkit-scrollbar]:hidden">
       <Header />
       <ChatHistory messages={messages} isLoading={isLoading} />
-      <ChatInput onSendMessage={extractAndSendMessage} />
+      <ChatInput onSendMessage={extractAndSendMessage} isLoading={isLoading} />
     </div>
   )
 }

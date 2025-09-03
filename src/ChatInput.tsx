@@ -2,10 +2,11 @@ import { useState } from 'react'
 import { Send } from 'lucide-react'
 
 interface ChatInputProps {
-  onSendMessage: (message: string) => void;
+  onSendMessage: (message: string) => void
+  isLoading: boolean
 }
 
-function ChatInput({ onSendMessage }: ChatInputProps) {
+function ChatInput({ onSendMessage, isLoading }: ChatInputProps) {
   const [input, setInput] = useState('')
 
   const handleSendMessage = () => {
@@ -33,6 +34,7 @@ function ChatInput({ onSendMessage }: ChatInputProps) {
       <button
         className="send-button ml-5 p-4 border-2 border-gray-500 rounded-lg bg-blue-500 text-white"
         onClick={handleSendMessage}
+        disabled={!input.trim() || isLoading}
       >
         <Send size={24} />
       </button>
