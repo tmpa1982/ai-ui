@@ -16,9 +16,9 @@ function ChatInput({ onSendMessage }: ChatInputProps) {
   }
 
   return (
-    <div className="chat-input flex">
+    <div className="chat-input flex px-6 py-4 bg-gray-800 border-t border-gray-700">
       <textarea
-        className="border-2 border-gray-500 rounded-lg m-2 p-2 flex-1"
+        className="bg-gray-700 border-2 border-gray-500 rounded-lg flex-1 p-2"
         value={input}
         onChange={(e) => setInput(e.target.value)}
         onKeyUp={async (e) => {
@@ -31,7 +31,7 @@ function ChatInput({ onSendMessage }: ChatInputProps) {
         rows={2}
       />
       <button
-        className="send-button border-2 border-gray-500 rounded-lg m-2 p-4 bg-blue-500 text-white"
+        className="send-button ml-5 p-4 border-2 border-gray-500 rounded-lg bg-blue-500 text-white"
         onClick={handleSendMessage}
       >
         <Send size={24} />
