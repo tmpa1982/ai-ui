@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useMsal, useAccount } from "@azure/msal-react";
 import { apiRequest } from "./msalConfig";
 import ChatHistory from './ChatHistory'
@@ -39,10 +39,6 @@ function Interview() {
     }
   }
 
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
-
   const sendMessage = async (message: string) => {
     const token = await getToken();
     try {
@@ -66,13 +62,6 @@ function Interview() {
       console.error("API call failed:", err);
     }
   };
-
-  const scrollToBottom = () => {
-    const chatHistory = document.querySelector('.chat-history');
-    if (chatHistory) {
-      chatHistory.scrollTop = chatHistory.scrollHeight;
-    }
-  }
 
   return (
     <div className="chat-container h-screen flex flex-col [&::-webkit-scrollbar]:hidden">
