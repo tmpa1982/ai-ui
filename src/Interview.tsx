@@ -34,10 +34,10 @@ function Interview() {
   })
 
   const extractAndSendMessage = async (input: string) => {
-    if (input.trim()) {
-      setMessages([...messages, createMessage(input, 'user')]);
-      await sendMessage(input);
-    }
+    if (!input.trim() || isLoading) return
+
+    setMessages([...messages, createMessage(input, 'user')])
+    await sendMessage(input)
   }
 
   const sendMessage = async (message: string) => {
