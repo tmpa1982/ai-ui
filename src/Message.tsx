@@ -15,7 +15,7 @@ function Message({ text, align = 'left', bgColor, textColor, timestamp, timestam
   return (
     <div className="flex items-start gap-2">
       {Icon && align === 'left' && <Icon className="w-6 h-6 mt-2" />}
-      <div className={`message user ${align === 'right' ? 'ml-auto' : ''} text-${align} ${bgColor} ${textColor} border-2 border-gray-500 rounded-2xl m-1 p-2 max-w-3/4 inline-block`}>
+      <div className={`message user ${align === 'right' ? 'ml-auto' : ''} text-${align} ${bgColor} ${textColor} border-2 border-gray-500 rounded-2xl m-1 p-2 max-w-3/4 inline-block shadow-[1px_1px_4px_rgba(255,255,255,0.5)]`}>
         <Markdown>{text}</Markdown>
         {timestamp && (
           <div className={`text-xs ${timestampColor || 'text-gray-500'} mt-1`}>
