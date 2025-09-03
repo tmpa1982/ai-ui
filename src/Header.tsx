@@ -1,4 +1,5 @@
 import { useMsal, useAccount } from "@azure/msal-react";
+import { LogOut } from "lucide-react";
 
 function Header() {
   const { instance, accounts } = useMsal();
@@ -15,8 +16,9 @@ function Header() {
       </div>
       <button
         onClick={handleLogout}
-        className="px-4 py-2 text-sm text-gray-200 hover:text-white bg-gray-700 hover:bg-gray-600 rounded-md transition-colors"
+        className="px-4 py-2 text-sm text-gray-200 hover:text-white bg-gray-700 hover:bg-gray-600 rounded-md transition-colors flex items-center gap-2"
       >
+        <LogOut size={16} />
         Log Out
       </button>
     </div>
