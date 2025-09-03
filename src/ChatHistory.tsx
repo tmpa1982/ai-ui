@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import UserMessage from './UserMessage'
 import BotMessage from './BotMessage'
+import { Loader2 } from 'lucide-react'
 import type { Message } from './types'
 
 interface ChatHistoryProps {
@@ -28,7 +29,12 @@ function ChatHistory({ messages, isLoading }: ChatHistoryProps) {
           return <MessageComponent key={message.id} text={message.text} timestamp={message.timestamp} />
       })}
 
-      {isLoading && <BotMessage text="Typing..." />}
+      {isLoading && (
+        <div className="flex items-center gap-2 text-gray-300 p-2">
+          <Loader2 className="w-5 h-5 animate-spin" />
+          <span>Thinking...</span>
+        </div>
+      )}
     </div>
   )
 }
