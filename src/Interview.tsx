@@ -19,7 +19,7 @@ function Interview() {
         account: account!,
       });
       return response.accessToken;
-    } catch (error) {
+    } catch {
       // fallback to interactive if silent fails
       const response = await instance.acquireTokenPopup(apiRequest);
       return response.accessToken;
