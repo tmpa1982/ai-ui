@@ -26,7 +26,7 @@ function ChatHistory({ messages, isLoading }: ChatHistoryProps) {
     <div ref={chatContainerRef} className="chat-history flex-1 m-2 overflow-y-auto [&::-webkit-scrollbar]:hidden">
       {messages.map((message) => {
           const MessageComponent = message.sender === 'user' ? UserMessage : BotMessage
-          return <MessageComponent key={message.id} text={message.text} />
+          return <MessageComponent key={message.id} text={message.text} timestamp={message.timestamp} />
       })}
 
       {isLoading && <BotMessage text="Typing..." />}
