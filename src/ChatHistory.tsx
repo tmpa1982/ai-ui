@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react'
 import UserMessage from './UserMessage'
 import BotMessage from './BotMessage'
-
 import type { Message } from './types'
 
 interface ChatHistoryProps {

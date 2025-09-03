@@ -13,6 +13,7 @@
     "@azure/msal-browser": "^4.21.0",
     "@azure/msal-react": "^3.0.19",
     "@tailwindcss/vite": "^4.1.12",
+    "lucide-react": "^0.542.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-markdown": "^10.1.0",

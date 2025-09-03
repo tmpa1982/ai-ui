@@ -1,4 +1,5 @@
 import Message from './Message'
+import { User } from 'lucide-react'
 
 function UserMessage({ text, timestamp }: { text: string; timestamp?: Date }) {
   return (
@@ -8,6 +9,7 @@ function UserMessage({ text, timestamp }: { text: string; timestamp?: Date }) {
       bgColor="bg-blue-500"
       textColor="text-white"
       timestamp={timestamp}
+      icon={User}
     />
   )
 }
