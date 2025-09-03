@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
-import Markdown from 'react-markdown';
 import { useMsal, useAccount } from "@azure/msal-react";
 import { apiRequest } from "./msalConfig";
+import UserMessage from './UserMessage'
+import BotMessage from './BotMessage'
 
 function Interview() {
   const [messages, setMessages] = useState<Array<{ text: string; sender: string }>>([])
@@ -71,17 +72,8 @@ function Interview() {
     <div className="chat-container h-screen flex flex-col [&::-webkit-scrollbar]:hidden">
       <div className="chat-history flex-1 m-2 overflow-y-auto [&::-webkit-scrollbar]:hidden">
         {messages.map((message, index) => {
-          const textAlign = message.sender === 'user' ? 'text-right' : 'text-left';
-          const marginLeft = message.sender === 'user' ? 'ml-auto' : '';
-          const backgroundColor = message.sender === 'user' ? 'bg-blue-500' : 'bg-gray-700';
-          const textColor = message.sender === 'user' ? 'text-white' : 'text-gray-300';
-          return (
-            <div key={index} className="flex">
-              <div className={`message ${message.sender} ${textAlign} ${marginLeft} ${backgroundColor} ${textColor} border-2 border-gray-500 rounded-2xl m-1 p-2 max-w-3/4 inline-block`}>
-                <Markdown>{message.text}</Markdown>
-              </div>
-            </div>
-          )
+            const MessageComponent = message.sender === 'user' ? UserMessage : BotMessage
+            return <MessageComponent key={index} text={message.text} />
         })}
       </div>
       <div className="chat-input flex">
