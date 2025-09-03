@@ -7,17 +7,18 @@ interface MessageProps {
   bgColor: string;
   textColor: string;
   timestamp?: Date;
+  timestampColor?: string;
   icon?: LucideIcon;
 }
 
-function Message({ text, align = 'left', bgColor, textColor, timestamp, icon: Icon }: MessageProps) {
+function Message({ text, align = 'left', bgColor, textColor, timestamp, timestampColor, icon: Icon }: MessageProps) {
   return (
     <div className="flex items-start gap-2">
       {Icon && align === 'left' && <Icon className="w-6 h-6 mt-2" />}
       <div className={`message user ${align === 'right' ? 'ml-auto' : ''} text-${align} ${bgColor} ${textColor} border-2 border-gray-500 rounded-2xl m-1 p-2 max-w-3/4 inline-block`}>
         <Markdown>{text}</Markdown>
         {timestamp && (
-          <div className="text-xs text-gray-500 mt-1">
+          <div className={`text-xs ${timestampColor || 'text-gray-500'} mt-1`}>
             {timestamp.toLocaleTimeString()}
           </div>
         )}

@@ -8,6 +8,7 @@ function BotMessage({ text, timestamp }: { text: string; timestamp?: Date }) {
       align="left"
       bgColor="bg-gray-700"
       textColor="text-gray-300"
+      timestampColor="text-gray-400"
       timestamp={timestamp}
       icon={Bot}
     />

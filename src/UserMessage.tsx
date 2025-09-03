@@ -8,6 +8,7 @@ function UserMessage({ text, timestamp }: { text: string; timestamp?: Date }) {
       align="right"
       bgColor="bg-blue-500"
       textColor="text-white"
+      timestampColor="text-blue-200"
       timestamp={timestamp}
       icon={User}
     />
