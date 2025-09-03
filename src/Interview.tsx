@@ -40,7 +40,7 @@ function Interview() {
     const token = await getToken();
     try {
       const apiUrl: string = import.meta.env.VITE_API_URL || 'https://tran-llm-daatfkc6hhf0a8hf.southeastasia-01.azurewebsites.net';
-      const response = await fetch(`${apiUrl}/openai/question`, {
+      const response = await fetch(`${apiUrl}/langgraph/question`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
