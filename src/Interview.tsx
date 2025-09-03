@@ -36,7 +36,7 @@ function Interview() {
   const extractAndSendMessage = async (input: string) => {
     if (!input.trim() || isLoading) return
 
-    setMessages([...messages, createMessage(input, 'user')])
+    setMessages(prev => [...prev, createMessage(input, 'user')])
     await sendMessage(input)
   }
 
