@@ -41,7 +41,7 @@ function ChatInput({ onSendMessage, isLoading }: ChatInputProps) {
           <Send size={22} />
         </button>
       </div>
-      <p className="text-gray-500 text-xs mt-2">Press Enter to send, Shift + Enter for new line</p>
+      <p className="text-gray-500 text-xs my-2">Press Enter to send, Shift + Enter for new line</p>
     </div>
   )
 }
