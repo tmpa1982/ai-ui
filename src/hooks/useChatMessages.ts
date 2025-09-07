@@ -36,7 +36,12 @@ export function useChatMessages() {
     await sendMessage(input)
   }
 
-  const sendMessage = async (message: string) => {
+  const endInterview = async () => {
+    if (isLoading) return
+    await sendMessage("", true)
+  }
+
+  const sendMessage = async (message: string, endInterview: boolean = false) => {
     const token = await getToken();
     setIsLoading(true)
     try {
@@ -47,7 +52,7 @@ export function useChatMessages() {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
         },
-        body: JSON.stringify({ message }),
+        body: JSON.stringify({ message, endInterview }),
       });
 
       if (response.ok) {
@@ -67,5 +72,6 @@ export function useChatMessages() {
     messages,
     isLoading,
     extractAndSendMessage,
+    endInterview,
   }
 }

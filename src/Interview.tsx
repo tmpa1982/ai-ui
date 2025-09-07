@@ -5,7 +5,7 @@ import ChatIntro from './ChatIntro'
 import Header from './Header'
 
 function Interview() {
-  const { messages, isLoading, extractAndSendMessage } = useChatMessages();
+  const { messages, isLoading, extractAndSendMessage, endInterview } = useChatMessages();
   return (
     <div className="chat-container h-screen flex flex-col [&::-webkit-scrollbar]:hidden pb-[env(safe-area-inset-bottom)]">
       <Header />
@@ -15,7 +15,7 @@ function Interview() {
         <ChatHistory messages={messages} isLoading={isLoading} />
       )
       }
-      <ChatInput onSendMessage={extractAndSendMessage} isLoading={isLoading} />
+      <ChatInput onSendMessage={extractAndSendMessage} onStop={endInterview} isLoading={isLoading} />
     </div>
   )
 }
