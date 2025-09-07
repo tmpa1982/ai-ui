@@ -2,6 +2,17 @@
 
 @layer components {
   .btn-primary {
-    @apply text-sm text-gray-200 hover:text-white bg-gray-700 hover:bg-gray-600 rounded-md transition-colors flex items-center gap-2;
+    @apply
+      text-sm
+      text-gray-200
+      hover:text-white
+      bg-gray-700
+      hover:bg-gray-600
+      rounded-md
+      transition-colors
+      flex
+      items-center
+      gap-2
+    ;
   }
 }
