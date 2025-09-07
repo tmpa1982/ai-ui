@@ -17,7 +17,7 @@ function ChatInput({ onSendMessage, isLoading }: ChatInputProps) {
   }
 
   return (
-    <div className="chat-input flex flex-col px-6 py-4 bg-gray-800 border-t border-gray-700 items-center">
+    <div className="chat-input flex flex-col px-6 py-4 bg-gray-800 border-t border-gray-700 items-center sticky bottom-0 pb-[env(safe-area-inset-bottom)] z-10">
       <div className="flex w-full gap-4">
         <textarea
           className="flex-1 resize-none bg-gray-700 border border-gray-600 rounded-xl p-3 text-base text-white placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition duration-150 ease-in-out min-h-[48px] max-h-40"
