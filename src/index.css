@@ -15,4 +15,12 @@
       gap-2
     ;
   }
+  .heading-main {
+    @apply
+      text-gray-200
+      font-medium
+      text-2xl
+      m-4
+    ;
+  }
 }
