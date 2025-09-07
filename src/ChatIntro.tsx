@@ -2,7 +2,7 @@ import { Bot } from "lucide-react"
 
 export default function ChatIntro() {
   return (
-    <div className="chat-intro-container h-full flex flex-col justify-center items-center text-center px-4">
+    <div className="chat-intro-container h-full flex flex-col justify-center items-center text-center">
       <Bot className="w-16 h-16" />
       <h1 className="heading-main">
         Start a conversation
