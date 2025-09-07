@@ -7,10 +7,10 @@ const Login: React.FC = () => {
   return (
     <div className="login-center-container h-full flex justify-center items-center">
       <button
-        className="login-button border-2 border-gray-500 rounded-lg m-2 p-4 px-8 text-gray-400 font-bold"
+        className="px-8 py-4 text-sm text-gray-200 hover:text-white bg-gray-700 hover:bg-gray-600 rounded-md transition-colors flex items-center gap-2"
         onClick={() => instance.loginPopup(loginRequest)}
       >
-        Login
+        Sign in with Microsoft
       </button>
     </div>
   )
