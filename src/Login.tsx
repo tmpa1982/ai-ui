@@ -9,7 +9,7 @@ const Login: React.FC = () => {
     <div className="login-center-container h-full flex flex-col justify-center items-center">
       <MessageCircle className="w-16 h-16" />
       <h1 className="heading-main">Interview Agent</h1>
-      <p className="text-gray-500 text-s m-3">Sign in to start chatting with our AI-powered assistant</p>
+      <p className="description-text">Sign in to start chatting with our AI-powered assistant</p>
       <button
         className="btn-primary m-4 px-8 py-4"
         onClick={() => instance.loginPopup(loginRequest)}

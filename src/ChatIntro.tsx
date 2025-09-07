@@ -7,7 +7,7 @@ export default function ChatIntro() {
       <h1 className="heading-main">
         Start a conversation
       </h1>
-      <p className="text-gray-500 text-s m-3">
+      <p className="description-text">
         Ask me anything! I'm here to help with your questions and provide assistance.
       </p>
     </div>
