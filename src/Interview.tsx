@@ -7,7 +7,7 @@ import Header from './Header'
 function Interview() {
   const { messages, isLoading, extractAndSendMessage } = useChatMessages();
   return (
-    <div className="chat-container h-screen flex flex-col [&::-webkit-scrollbar]:hidden">
+    <div className="chat-container h-screen flex flex-col [&::-webkit-scrollbar]:hidden pb-[env(safe-area-inset-bottom)]">
       <Header />
       {messages.length === 0 && !isLoading ? (
         <ChatIntro />
