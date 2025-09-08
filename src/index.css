@@ -30,16 +30,29 @@
       m-3
     ;
   }
+  .content-title {
+    @apply
+      text-gray-200
+      font-semibold
+      text-lg
+      mb-2
+    ;
+  }
+  .content-subtitle {
+    @apply
+      text-gray-400
+      text-sm
+      mb-4
+    ;
+  }
   .content-box {
     @apply
       bg-gray-800
       border
       border-gray-700
       rounded-lg
-      p-8
       flex
       flex-col
-      justify-center
       items-center
       text-center
       shadow-[0_0_8px_rgba(255,255,255,0.7)]
