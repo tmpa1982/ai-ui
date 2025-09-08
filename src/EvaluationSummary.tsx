@@ -1,3 +1,4 @@
+import Markdown from "react-markdown";
 import type { Evaluation } from "./types";
 
 interface EvaluationSummaryProps {
@@ -34,7 +35,9 @@ function EvaluationDetail({ title, subtitle, detail } : EvaluationDetailProps) {
         <h2 className="content-title">{title}</h2>
         <h3 className="content-subtitle">{subtitle}</h3>
       </div>
-      <p className="description-text">{detail}</p>
+      <div className="description-text">
+        <Markdown >{detail}</Markdown>
+      </div>
     </div>
   )
 }
