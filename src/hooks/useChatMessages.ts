@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import { useMsal, useAccount } from "@azure/msal-react";
 import { apiRequest } from "../msalConfig";
-import type { Message } from '../types'
+import type { Evaluation, Message } from '../types'
 
 export function useChatMessages() {
   const [messages, setMessages] = useState<Message[]>([])
+  const [evaluation, setEvaluation] = useState<Evaluation | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const { instance, accounts } = useMsal();
   const account = useAccount(accounts[0] || {});
@@ -57,7 +58,12 @@ export function useChatMessages() {
 
       if (response.ok) {
         const data = await response.json();
-        setMessages((prev) => [...prev, createMessage(data || 'No response', 'bot')]);
+        if (endInterview) {
+          const evaluation = JSON.parse(data) as Evaluation
+          setEvaluation(evaluation)
+        } else {
+          setMessages((prev) => [...prev, createMessage(data || 'No response', 'bot')])
+        }
       } else {
         setMessages((prev) => [...prev, createMessage('Error: Failed to get response from API', 'bot')]);
       }
@@ -70,6 +76,7 @@ export function useChatMessages() {
 
   return {
     messages,
+    evaluation,
     isLoading,
     extractAndSendMessage,
     endInterview,
