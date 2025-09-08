@@ -59,7 +59,7 @@ export function useChatMessages() {
       if (response.ok) {
         const data = await response.json();
         if (endInterview) {
-          const evaluation = JSON.parse(data) as Evaluation
+          const evaluation = data as Evaluation
           setEvaluation(evaluation)
         } else {
           setMessages((prev) => [...prev, createMessage(data || 'No response', 'bot')])
