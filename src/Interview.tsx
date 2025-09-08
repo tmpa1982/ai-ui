@@ -24,7 +24,7 @@ function Interview() {
     <div className="chat-container h-screen flex flex-col [&::-webkit-scrollbar]:hidden pb-[env(safe-area-inset-bottom)]">
       <Header />
       {selectContent()}
-      <ChatInput onSendMessage={extractAndSendMessage} onStop={endInterview} isLoading={isLoading} />
+      {!evaluation && <ChatInput onSendMessage={extractAndSendMessage} onStop={endInterview} isLoading={isLoading} />}
     </div>
   )
 }
