@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useMsal, useAccount } from "@azure/msal-react";
 import { apiRequest } from "../msalConfig";
 import type { ChatResponse, Evaluation, Message } from '../types'
+import apiUrl from '../apiUrl'
 
 export function useChatMessages() {
   const [messages, setMessages] = useState<Message[]>([])
@@ -46,7 +47,6 @@ export function useChatMessages() {
     const token = await getToken();
     setIsLoading(true)
     try {
-      const apiUrl: string = import.meta.env.VITE_API_URL || 'https://tran-llm-daatfkc6hhf0a8hf.southeastasia-01.azurewebsites.net';
       const response = await fetch(`${apiUrl}/langgraph/question`, {
         method: 'POST',
         headers: {
