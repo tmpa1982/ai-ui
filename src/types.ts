@@ -5,6 +5,11 @@ export type Message = {
   timestamp: Date;
 }
 
+export type ChatResponse = {
+  message: string | null;
+  evaluator_scorecard: Evaluation | null;
+}
+
 export type Evaluation = {
   communication_score: number;
   technical_competency_score: number;

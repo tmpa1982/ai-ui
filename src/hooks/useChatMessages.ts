@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useMsal, useAccount } from "@azure/msal-react";
 import { apiRequest } from "../msalConfig";
-import type { Evaluation, Message } from '../types'
+import type { ChatResponse, Evaluation, Message } from '../types'
 
 export function useChatMessages() {
   const [messages, setMessages] = useState<Message[]>([])
@@ -57,12 +57,14 @@ export function useChatMessages() {
       });
 
       if (response.ok) {
-        const data = await response.json();
-        if (endInterview) {
-          const evaluation = data as Evaluation
-          setEvaluation(evaluation)
-        } else {
-          setMessages((prev) => [...prev, createMessage(data || 'No response', 'bot')])
+        const data = await response.json() as ChatResponse
+
+        if (data.evaluator_scorecard) {
+          setEvaluation(data.evaluator_scorecard)
+        }
+
+        if (data.message) {
+          setMessages((prev) => [...prev, createMessage(data.message!, 'bot')])
         }
       } else {
         setMessages((prev) => [...prev, createMessage('Error: Failed to get response from API', 'bot')]);
