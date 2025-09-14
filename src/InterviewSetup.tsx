@@ -3,7 +3,11 @@ import type { ChangeEvent, FormEvent } from "react"
 import { FolderUp, Loader2 } from 'lucide-react'
 import apiUrl from './apiUrl'
 
-export default function InterviewSetup() {
+interface InterviewSetupProps {
+  onSubmit: () => void
+}
+
+export default function InterviewSetup({ onSubmit }: InterviewSetupProps) {
   const [file, setFile] = useState<File | null>(null)
   const [progress, setProgress] = useState<number | null>(null)
   const [isUploading, setIsUploading] = useState(false)
@@ -137,6 +141,7 @@ export default function InterviewSetup() {
         {message && <div className="text-green-700 text-sm">{message}</div>}
         {error && <div className="text-red-600 text-sm">{error}</div>}
       </form>
+      <button className="btn-primary m-4 px-8 py-4" onClick={onSubmit}>Start!</button>
     </div>
   )
 }

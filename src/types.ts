@@ -18,3 +18,10 @@ export type Evaluation = {
   strengths: string;
   areas_of_improvement: string;
 }
+
+export const InterviewStage = {
+  Setup: "Setup",
+  Intro: "Intro",
+  Interview: "Interview",
+  Evaluation: "Evaluation",
+}
