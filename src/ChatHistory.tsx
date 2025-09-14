@@ -10,20 +10,18 @@ interface ChatHistoryProps {
 }
 
 function ChatHistory({ messages, isLoading }: ChatHistoryProps) {
-  const chatContainerRef = useRef<HTMLDivElement>(null)
+  const endRef = useRef<HTMLDivElement | null>(null)
 
   const scrollToBottom = () => {
-    if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight
-    }
-  };
+    endRef.current?.scrollIntoView({ behavior: "smooth" })
+  }
 
   useEffect(() => {
-    scrollToBottom()
+    scrollToBottom();
   }, [messages, isLoading])
 
   return (
-    <div ref={chatContainerRef} className="chat-history flex-1 m-2 overflow-y-auto [&::-webkit-scrollbar]:hidden">
+    <div className="chat-history flex-1 m-2 overflow-y-auto [&::-webkit-scrollbar]:hidden">
       {messages.map((message) => {
           const MessageComponent = message.sender === 'user' ? UserMessage : BotMessage
           return <MessageComponent key={message.id} text={message.text} timestamp={message.timestamp} />
@@ -35,6 +33,7 @@ function ChatHistory({ messages, isLoading }: ChatHistoryProps) {
           <span>Thinking...</span>
         </div>
       )}
+      <div ref={endRef} />
     </div>
   )
 }
