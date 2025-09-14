@@ -94,7 +94,7 @@ export default function InterviewSetup({ onSubmit }: InterviewSetupProps) {
         <form onSubmit={handleSubmit} className="space-y-4">
           <label className="block">
             <div className="mt-1 flex items-center gap-3">
-              <label className="flex items-center gap-2 cursor-pointer rounded-lg border-2 border-dashed border-gray-200 px-4 py-3 hover:bg-gray-50">
+              <label className="flex items-center gap-2 cursor-pointer rounded-lg border-2 border-dashed border-gray-200 px-4 py-3 hover:bg-gray-500">
                 <FolderUp />
                 <span className="text-sm">Choose file</span>
                 <input
