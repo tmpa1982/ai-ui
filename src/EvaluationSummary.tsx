@@ -23,7 +23,7 @@ function EvaluationScore({ type, score } : EvaluationScoreProps) {
       <progress className="flex-1 w-48 h-3 rounded-lg overflow-hidden appearance-none
           [&::-webkit-progress-bar]:bg-gray-700
           [&::-webkit-progress-value]:bg-emerald-500
-          [&::-moz-progress-bar]:bg-emerald-500" value={score} max={5} />
+          [&::-moz-progress-bar]:bg-emerald-500" value={score} max={10} />
     </div>
   )
 }
