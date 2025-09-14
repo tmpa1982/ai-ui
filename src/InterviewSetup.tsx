@@ -118,10 +118,10 @@ export default function InterviewSetup({ onSubmit }: InterviewSetupProps) {
             </div>
           </label>
 
-          <div>
+          <div className="flex justify-center">
             <button
               type="submit"
-              className="btn-primary m-4 px-6 py-3"
+              className="btn-primary px-6 py-3"
               disabled={!file || isUploading}
             >
               {isUploading ? <Loader2 /> : null}
