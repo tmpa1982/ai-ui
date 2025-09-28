@@ -128,7 +128,7 @@ export default function InterviewSetup({ onSubmit }: InterviewSetupProps) {
               className="btn-primary px-6 py-3"
               disabled={!file || isUploading}
             >
-              {isUploading ? <Loader2 /> : null}
+              {isUploading ? <Loader2 className="animate-spin" /> : null}
               <span>{isUploading ? "Uploading..." : "Upload"}</span>
             </button>
           </div>
