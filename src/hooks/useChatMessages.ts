@@ -1,6 +1,5 @@
 import { useState } from 'react'
-import { useMsal, useAccount } from "@azure/msal-react";
-import { apiRequest } from "../msalConfig";
+import { useAccessToken } from "./useAccessToken"
 import type { ChatResponse, Evaluation, Message } from '../types'
 import apiUrl from '../apiUrl'
 
@@ -8,22 +7,7 @@ export function useChatMessages() {
   const [messages, setMessages] = useState<Message[]>([])
   const [evaluation, setEvaluation] = useState<Evaluation | null>(null)
   const [isLoading, setIsLoading] = useState(false)
-  const { instance, accounts } = useMsal();
-  const account = useAccount(accounts[0] || {});
-
-  async function getToken() {
-    try {
-      const response = await instance.acquireTokenSilent({
-        ...apiRequest,
-        account: account!,
-      });
-      return response.accessToken;
-    } catch {
-      // fallback to interactive if silent fails
-      const response = await instance.acquireTokenPopup(apiRequest);
-      return response.accessToken;
-    }
-  }
+  const { getToken } = useAccessToken()
 
   const createMessage = (text: string, sender: 'user' | 'bot'): Message => ({
     id: crypto.randomUUID(),
