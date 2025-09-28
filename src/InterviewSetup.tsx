@@ -1,4 +1,6 @@
 import { useState } from "react"
+import { useMsal, useAccount } from "@azure/msal-react";
+import { apiRequest } from "./msalConfig";
 import type { ChangeEvent, FormEvent } from "react"
 import { FolderUp, Loader2 } from 'lucide-react'
 import apiUrl from './apiUrl'
@@ -13,6 +15,22 @@ export default function InterviewSetup({ onSubmit }: InterviewSetupProps) {
   const [isUploading, setIsUploading] = useState(false)
   const [message, setMessage] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const { instance, accounts } = useMsal();
+  const account = useAccount(accounts[0] || {});
+
+  async function getToken() {
+    try {
+      const response = await instance.acquireTokenSilent({
+        ...apiRequest,
+        account: account!,
+      });
+      return response.accessToken;
+    } catch {
+      // fallback to interactive if silent fails
+      const response = await instance.acquireTokenPopup(apiRequest);
+      return response.accessToken;
+    }
+  }
 
   function onFileChange(e: ChangeEvent<HTMLInputElement>) {
     setMessage(null)
@@ -38,11 +56,13 @@ export default function InterviewSetup({ onSubmit }: InterviewSetupProps) {
     setIsUploading(true)
     setProgress(0)
 
+    const token = await getToken()
     try {
       // Use XMLHttpRequest so we can report upload progress
       await new Promise<void>((resolve, reject) => {
         const xhr = new XMLHttpRequest()
         xhr.open("POST", `${apiUrl}/upload/storage_account`)
+        xhr.setRequestHeader("Authorization", `Bearer ${token}`)
 
         xhr.upload.onprogress = (evt) => {
           if (evt.lengthComputable) {
