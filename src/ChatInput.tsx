@@ -12,6 +12,7 @@ interface ChatInputProps {
 
 function ChatInput({ onSendMessage, onStop, isLoading }: ChatInputProps) {
   const [input, setInput] = useState('')
+  const [partialText, setPartialText] = useState('')
   const [recording, setRecording] = useState(false)
   const recognizerRef = useRef<SpeechSDK.SpeechRecognizer | null>(null)
   const audioConfigRef = useRef<SpeechSDK.AudioConfig | null>(null)
@@ -51,13 +52,14 @@ function ChatInput({ onSendMessage, onStop, isLoading }: ChatInputProps) {
 
     recognizer.recognizing = (_s, e) => {
       const text = e.result.text
-      setInput(text)
+      setPartialText(text)
     }
 
     recognizer.recognized = (_s, e) => {
       if (e.result.reason === SpeechSDK.ResultReason.RecognizedSpeech) {
         const text = e.result.text
-        setInput(text)
+        setInput(prev => prev ? prev + ' ' + text : text)
+        setPartialText('')
       } else if (e.result.reason === SpeechSDK.ResultReason.NoMatch) {
         // no speech recognized
       }
@@ -105,19 +107,25 @@ function ChatInput({ onSendMessage, onStop, isLoading }: ChatInputProps) {
     onStop()
   }
 
+  const handleTextChange = (text: string) => {
+    if (recording) return
+    setInput(text)
+  }
+
   return (
     <div className="chat-input flex flex-col p-3 bg-gray-800 border-t border-gray-700 items-center sticky bottom-0 pb-[env(safe-area-inset-bottom)] z-10">
       <div className="flex w-full gap-3">
         <textarea
           className="flex-1 resize-none bg-gray-700 border border-gray-600 rounded-xl p-3 text-base text-white placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition duration-150 ease-in-out min-h-[48px] max-h-40"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
+          value={partialText ? input + ' ' + partialText : input}
+          onChange={(e) => handleTextChange(e.target.value)}
           onKeyUp={async (e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
               e.preventDefault();
               handleSendMessage();
             }
           }}
+          disabled={recording}
           placeholder="Type your message..."
           rows={2}
         />
