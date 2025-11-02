@@ -93,10 +93,16 @@ function ChatInput({ onSendMessage, onStop, isLoading }: ChatInputProps) {
   }
 
   const handleSendMessage = () => {
+    stopRecording()
     if (input.trim()) {
       onSendMessage(input);
       setInput('');
     }
+  }
+
+  const handleStopInterview = () => {
+    stopRecording()
+    onStop()
   }
 
   return (
@@ -133,7 +139,7 @@ function ChatInput({ onSendMessage, onStop, isLoading }: ChatInputProps) {
         </button>
         <button
           className="stop-button btn-chat-input"
-          onClick={onStop}
+          onClick={handleStopInterview}
           disabled={isLoading}
           aria-label="Stop Interview"
         >
