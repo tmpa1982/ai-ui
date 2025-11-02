@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { useChatMessages } from './hooks/useChatMessages';
+import { useMemo, useState } from 'react'
+import { useChatMessages } from './hooks/useChatMessages'
 import ChatHistory from './ChatHistory'
 import ChatInput from './ChatInput'
 import ChatIntro from './ChatIntro'
@@ -9,24 +9,18 @@ import InterviewSetup from './InterviewSetup'
 import { InterviewStage } from './types'
 
 function Interview() {
-  const [stage, setStage] = useState(InterviewStage.Setup)
+  const [manualStage, setManualStage] = useState(InterviewStage.Setup)
   const { messages, evaluation, isLoading, extractAndSendMessage, endInterview } = useChatMessages()
 
-  useEffect(() => {
-    if (evaluation) {
-      setStage(InterviewStage.Evaluation)
-      return
-    }
-
-    if (messages.length !== 0) {
-      setStage(InterviewStage.Interview)
-      return
-    }
-  }, [evaluation, messages])
+  const stage = useMemo(() => {
+    if (evaluation) return InterviewStage.Evaluation
+    if (messages.length !== 0) return InterviewStage.Interview
+    return manualStage
+  }, [manualStage, evaluation, messages])
 
   function selectContent() {
     switch (stage) {
-      case InterviewStage.Setup: return <InterviewSetup onSubmit={() => setStage(InterviewStage.Intro)} />
+      case InterviewStage.Setup: return <InterviewSetup onSubmit={() => setManualStage(InterviewStage.Intro)} />
       case InterviewStage.Intro: return <ChatIntro />
       case InterviewStage.Interview: return <ChatHistory messages={messages} isLoading={isLoading} />
       case InterviewStage.Evaluation: return <EvaluationSummary evaluation={evaluation!} />
