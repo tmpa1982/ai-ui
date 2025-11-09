@@ -1,7 +1,11 @@
 import { useMsal, useAccount } from "@azure/msal-react";
-import { LogOut } from "lucide-react";
+import { LogOut, Mic } from "lucide-react";
 
-function Header() {
+interface HeaderProps {
+  onNavigateToVoice?: () => void;
+}
+
+function Header({ onNavigateToVoice }: HeaderProps) {
   const { instance, accounts } = useMsal();
   const account = useAccount(accounts[0] || {});
 
@@ -14,13 +18,25 @@ function Header() {
       <div className="text-gray-200 font-medium">
         {account?.name || account?.username || 'User'}
       </div>
-      <button
-        onClick={handleLogout}
-        className="btn-primary px-4 py-2 "
-      >
-        <LogOut size={16} />
-        Log Out
-      </button>
+      <div className="flex items-center gap-3">
+        {onNavigateToVoice && (
+          <button
+            onClick={onNavigateToVoice}
+            className="btn-primary px-4 py-2 flex items-center gap-2 hover:bg-gray-700 rounded transition-colors"
+            title="Open Voice Chat"
+          >
+            <Mic size={16} />
+            Voice Chat
+          </button>
+        )}
+        <button
+          onClick={handleLogout}
+          className="btn-primary px-4 py-2 flex items-center gap-2 hover:bg-gray-700 rounded transition-colors"
+        >
+          <LogOut size={16} />
+          Log Out
+        </button>
+      </div>
     </div>
   );
 }

@@ -8,7 +8,11 @@ import Header from './Header'
 import InterviewSetup from './InterviewSetup'
 import { InterviewStage } from './types'
 
-function Interview() {
+interface InterviewProps {
+  onNavigateToVoice?: () => void;
+}
+
+function Interview({ onNavigateToVoice }: InterviewProps) {
   const [manualStage, setManualStage] = useState(InterviewStage.Setup)
   const { messages, evaluation, isLoading, extractAndSendMessage, endInterview } = useChatMessages()
 
@@ -30,7 +34,7 @@ function Interview() {
   const showChat = stage === InterviewStage.Interview || stage === InterviewStage.Intro
   return (
     <div className="chat-container h-screen flex flex-col [&::-webkit-scrollbar]:hidden pb-[env(safe-area-inset-bottom)]">
-      <Header />
+      <Header onNavigateToVoice={onNavigateToVoice} />
       <div className="flex-1 overflow-y-visible bg-gray-900">
         {selectContent()}
       </div>
