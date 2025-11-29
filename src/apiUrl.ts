@@ -1,3 +1,3 @@
-const apiUrl: string = import.meta.env.VITE_API_URL || 'https://tran-llm-daatfkc6hhf0a8hf.southeastasia-01.azurewebsites.net'
+const apiUrl: string = import.meta.env.VITE_API_URL || 'https://ai-api-app.orangecliff-26dccbd5.southeastasia.azurecontainerapps.io'
 
 export default apiUrl
